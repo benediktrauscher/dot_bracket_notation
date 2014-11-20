@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>RNA secondary structure visualization</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+<body>
+
+	<h1>RNA secondary structure visualization</h1>
+
+	<div class="container">
+		<div class="row">
+    		<div class="col-xs-12"><p>Enter RNA-Sequence here:<br></p></div>
+  		</div>
+  		<div class="row">
+    		<div class="col-xs-12"><input class="textbox" id="SEQ_BOX"><br><br></div>
+  		</div>
+  		<div class="row">
+    		<div class="col-xs-12"><p>Enter Dot-Bracket Annotation here:<br></p></div>
+  		</div>
+  		<div class="row">
+    		<div class="col-xs-12"><input class="textbox" id="DOTBR_BOX"><br><br></div>
+		</div>
+  		<div class="row">
+    		<div class="col-xs-12"><input class="button" id="PERFORM_VIS" name="Perform Vis" value="Show secondary structure"></div>
+  		</div>
+	</div>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="src/transform.js"></script>
+	<script src="src/visualizerna.js"></script>
+	<script src="src/parseinput.js"></script>
+
+</body>
