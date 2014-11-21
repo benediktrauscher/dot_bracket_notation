@@ -44,6 +44,3 @@ function transformDotBracket(seq, dotbr){
 	return {nodes: nodes,
 			links: links};
 }
-
-var tone = "AAAAAAAAA"
-var ttwo = ".<<[.].>>""
