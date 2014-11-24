@@ -3,7 +3,22 @@
 	<meta charset="utf-8">
 	<title>RNA secondary structure visualization</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<!-- JSON support for IE (needed to use JS API) -->
+    <script type="text/javascript" src="lib/cytoscape/js/min/json2.min.js"></script>
+	<!-- Flash embedding utility (needed to embed Cytoscape Web) -->
+    <script type="text/javascript" src="lib/cytoscape/js/min/AC_OETags.min.js"></script>       
+    <!-- Cytoscape Web JS API (needed to reference org.cytoscapeweb.Visualization) -->
+    <script type="text/javascript" src="lib/cytoscape/js/min/cytoscapeweb.min.js"></script>
+	<script src="src/transform.js"></script>
+	<script src="src/visualizerna.js"></script>
+	<script src="src/parseinput.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<style>
+        /* The Cytoscape Web container must have its dimensions set. */
+        html, body { height: 100%; width: 100%; padding: 0; margin: 0; }
+        #cytoscapeweb { width: 100%; height: 100%; }
+    </style>
 </head>
 <body>
 
@@ -27,9 +42,8 @@
   		</div>
 	</div>
 
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	<script src="src/transform.js"></script>
-	<script src="src/visualizerna.js"></script>
-	<script src="src/parseinput.js"></script>
+
+	<div id="cytoscapeweb">
+    </div>
 
 </body>

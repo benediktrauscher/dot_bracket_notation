@@ -8,12 +8,16 @@ function getInputSequences() {
 }
 
 function main() {
+  //initalize input boxes with example structure
+  document.getElementById('SEQ_BOX').value = "GAGUACAAUAUGUACCG";
+  document.getElementById('DOTBR_BOX').value = "..((((.....))))..";
+
   var runButton = document.getElementById('PERFORM_VIS');
   runButton.addEventListener('click', function(){ 
   	var input = getInputSequences();
   	if(input[0].length === input[1].length && input[0].length > 0 && input[1].length > 0){
   		var struct = transformDotBracket(input[0], input[1]);
-  		visRna(struct.nodes, struct.links);
+  		visRnaCytoscape(struct);
   	}
   }, false);
 }
