@@ -7,6 +7,8 @@ function transformDotBracket(seq, dotbr){
 	var nodes = new Array();
 	var links = new Array();
 
+	var src;
+
 	for(var i = 0; i < seq.length; i++){
 		nodes.push({name: seq[i]});
 		if(i > 0){
@@ -26,16 +28,33 @@ function transformDotBracket(seq, dotbr){
 				pointy.push(i);
 				break;
 			case ")":
-				links.push({source: round.pop(), target: i, type: "hbond"});
+				src = round.pop();
+				console.log("yo");
+				links.push({source: src, target: i, type: "hbond"});
+				if(nodes[src].name==="G" || nodes[src].name==="C"){
+					links.push({source: i, target: src, type: "hbond"});
+				}
 				break;
 			case "}":
-				links.push({source: curly.pop(), target: i, type: "hbond"});
+				src = curly.pop();
+				links.push({source: src, target: i, type: "hbond"});
+				if(nodes[src].name==="G" || nodes[src].name==="C"){
+					links.push({source: i, target: src, type: "hbond"});
+				}
 				break;
 			case "]":
-				links.push({source: square.pop(), target: i, type: "hbond"});
+				src = square.pop();
+				links.push({source: src, target: i, type: "hbond"});
+				if(nodes[src].name==="G" || nodes[src].name==="C"){
+					links.push({source: i, target: src, type: "hbond"});
+				}
 				break;
 			case ">":
-				links.push({source: pointy.pop(), target: i, type: "hbond"});
+				src = pointy.pop();
+				links.push({source: src, target: i, type: "hbond"});
+				if(nodes[src].name==="G" || nodes[src].name==="C"){
+					links.push({source: i, target: src, type: "hbond"});
+				}
 				break;
 			case ".":
 				break;
@@ -45,44 +64,80 @@ function transformDotBracket(seq, dotbr){
 			links: links};
 }
 
-function toJson(graph){
-	var network = {
-		dataSchema: {
-            nodes: [{ name: "label", type: "string"} ],
-            edges: [{ name: "label", type: "string"},
-            		{ name: "weight", type: "integer"} ]
-        },
-        data: {
-            nodes: [],
-            edges: []
-        }
-    };
+function toCytoscapeElements(graph){
+	var elements = [];
+	var el;
 
-    var nodes = graph.nodes;
-    for(var i = 0; i < nodes.length; i++){
-    	network.data.nodes.push({ id: i.toString(),
-    							label: nodes[i].name });
-    }
+	var nodes = graph.nodes;
+	for(var i = 0; i < nodes.length; i++){
+		el = {
+			group: 'nodes',
+			data: {
+				id: i.toString(),
+				label: nodes[i].name
+			},
+			selected: false,
+			selectable: true,
+			locked: false,
+			grabbable: true,
+			css: {
+				'background-color': getColor(nodes[i].name),
+				'width': 100,
+				'height': 100
+			}
+		}
+		elements.push(el);
+	}
+	var links = graph.links;
+	for(var i = 0; i < links.length; i++){
+		el = {
+			group: 'edges',
+			data: {
+				id: links[i].source + "to" + links[i].target,
+				source: links[i].source.toString(), 
+    			target: links[i].target.toString(),
+    			label: links[i].type ,
+    			weight: getWeight(links[i].type)
+			},
+			css: {
+				'line-color': getColor(links[i].type),
+				'width': getWeight(links[i].type)
+			}
+		}
+		elements.push(el);
+	}
+	return elements;
+}
 
-    var links = graph.links;
-    for(var i = 0; i < links.length; i++){
-    	network.data.edges.push({ id: links[i].source + "to" + links[i].target,
-    							source: links[i].source.toString(), 
-    							target: links[i].target.toString(),
-    							label: links[i].type ,
-    							weight: getWeight(links[i].type)
-    						});
-    }
-
-    return network;
+function getColor(element){
+	var col = "";
+	if (element === "A"){
+		col = "#64F73F";
+	}
+	else if (element === "C"){
+		col = "#FFB340";
+	}
+	else if (element === "U"){
+		col = "#3C88EE";
+	}
+	else if (element === "G"){
+		col = "#EB413C";
+	}
+	else if (element === "hbond"){
+		col = "#3A9AD9";
+	}
+	else {
+		col = "black";
+	}
+	return col;
 }
 
 function getWeight(type) {
 	var weight; 
 	if(type==="hbond"){
-    	weigth = 3000;
+    	weight = 4;
     } else {
-    	weight = 3000;
+    	weight = 5;
     }
     return weight;
 }

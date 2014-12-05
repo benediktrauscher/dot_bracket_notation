@@ -76,12 +76,10 @@ body {
 	text-align:center;
 	background-color: #F6F6F6;
 }
-
-#Content {
-	width:500px;
-	margin:0px auto;
-	text-align:left;
-	padding:15px;
-	border:1px dashed #333;
-	background-color:#eee;
+#cy {
+  height: 40%;
+  width:  30%;
+  position: absolute; 
+  left: 30%;
+  top: 0;
 }
