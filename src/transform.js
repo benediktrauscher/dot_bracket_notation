@@ -29,7 +29,6 @@ function transformDotBracket(seq, dotbr){
 				break;
 			case ")":
 				src = round.pop();
-				console.log("yo");
 				links.push({source: src, target: i, type: "hbond"});
 				if(nodes[src].name==="G" || nodes[src].name==="C"){
 					links.push({source: i, target: src, type: "hbond"});

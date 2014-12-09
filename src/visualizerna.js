@@ -51,10 +51,15 @@ function visCytoscapeJs(graph) {
   		},			
       
       	ready: function(){
-      		cy.center();
+			cy.viewport({
+  				zoom: 2,
+ 				pan: { x: 100, y: 100 }
+			});
 			cy.fit();
-			document.getElementById('cy').childNodes[0].childNodes[4].style.position = "relative";
-      		document.getElementById('cy').childNodes[0].style.position = "relative";
+			document.getElementById('cy').childNodes[0]
+				.childNodes[4].style.position = "relative";
+      		document.getElementById('cy').childNodes[0]
+      			.style.position = "relative";
       		document.getElementById('cy').style.position = "relative";
       	}
 	})
