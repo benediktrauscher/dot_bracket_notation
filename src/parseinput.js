@@ -9,11 +9,12 @@ function getInputSequences() {
 
 function main() {
   //initalize input boxes with example structure
-  document.getElementById('SEQ_BOX').value = "GAGUACAAUAUGUACCG";
-  document.getElementById('DOTBR_BOX').value = "..((((.....))))..";
+  document.getElementById('SEQ_BOX').value = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
+  document.getElementById('DOTBR_BOX').value = "(((((((((...((((((.........))))))........((((((.......))))))..)))))))))";
   var input = getInputSequences();
   var struct = transformDotBracket(input[0], input[1]);
   visCytoscapeJs(struct);
+  //d3test(struct);
 
   var runButton = document.getElementById('PERFORM_VIS');
   runButton.addEventListener('click', function(){ 
@@ -21,6 +22,7 @@ function main() {
   	if(input[0].length === input[1].length && input[0].length > 0 && input[1].length > 0){
   		var struct = transformDotBracket(input[0], input[1]);
   		visCytoscapeJs(struct);
+      //d3test(struct);
   	}
   }, false);
 }
