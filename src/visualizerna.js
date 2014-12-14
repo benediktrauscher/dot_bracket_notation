@@ -120,7 +120,7 @@ function visCytoscapeJs(graph) {
 
 	cy.on('mouseover', 'node', function(event){
 		var nd = event.cyTarget;
-		Tip(nd.id()+1);
+		Tip(parseInt(nd.id(), 10)+1);
 	})
 	cy.on('mouseout', 'node', function(event){
 		var nd = event.cyTarget;
