@@ -11,6 +11,12 @@ function main() {
   //initalize input boxes with example structure
   document.getElementById('SEQ_BOX').value = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
   document.getElementById('DOTBR_BOX').value = "(((((((((...((((((.........))))))........((((((.......))))))..)))))))))";
+  //init colors
+  $("#acolor").spectrum({ color: "#64F73F" });
+  $("#ccolor").spectrum({ color: "#FFB340" });
+  $("#gcolor").spectrum({ color: "#EB413C" });
+  $("#ucolor").spectrum({ color: "#3C88EE" });
+
   var input = getInputSequences();
   var struct = transformDotBracket(input[0], input[1]);
   visCytoscapeJs(struct);

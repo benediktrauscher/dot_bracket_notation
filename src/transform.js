@@ -118,16 +118,16 @@ function toCytoscapeElements(graph){
 function getColor(element){
 	var col = "";
 	if (element === "A"){
-		col = "#64F73F";
+		col = $("#acolor").spectrum('get').toHexString();
 	}
 	else if (element === "C"){
-		col = "#FFB340";
+		col = $("#ccolor").spectrum('get').toHexString();
 	}
 	else if (element === "U"){
-		col = "#3C88EE";
+		col = $("#ucolor").spectrum('get').toHexString();
 	}
 	else if (element === "G"){
-		col = "#EB413C";
+		col = $("#gcolor").spectrum('get').toHexString();
 	}
 	else if (element === "hbond"){
 		col = "#3A9AD9";

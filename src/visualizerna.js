@@ -86,7 +86,7 @@ function visCytoscapeJs(graph) {
 	      		})
 	      		.selector('edge')
 	      		.css({
-
+	      			
 	      		}),
   
   		elements: cyEle,

@@ -6,33 +6,50 @@
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
 	<script src="https://rawgit.com/cytoscape/cytoscape.js/master/lib/springy.js"></script>
+	<script type="text/javascript" src="lib/spectrum/spectrum.js"></script>
+
 	<script src="src/transform.js"></script>
 	<script src="src/visualizerna.js"></script>
 	<script src="src/parseinput.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<link rel="stylesheet" tpye="text/css" href="lib/spectrum/spectrum.css"
 </head>
 <body>
-
-	<h1>RNA secondary structure visualization</h1>
-
-	<div class="container">
-		<div class="row">
-    		<div class="col-xs-12"><p>Enter RNA-Sequence here:<br></p></div>
-  		</div>
-  		<div class="row">
-    		<div class="col-xs-12"><input class="textbox" id="SEQ_BOX"><br><br></div>
-  		</div>
-  		<div class="row">
-    		<div class="col-xs-12"><p>Enter Dot-Bracket Annotation here:<br></p></div>
-  		</div>
-  		<div class="row">
-    		<div class="col-xs-12"><input class="textbox" id="DOTBR_BOX"><br><br></div>
+	<div class="content">
+		<div class="header">
+			<h1>RNA secondary structure visualization</h1>
 		</div>
-  		<div class="row">
-    		<div class="col-xs-12"><input class="button" id="PERFORM_VIS" name="Perform Vis" value="Show secondary structure"></div>
-  		</div>
+		<div class="main">
+					<div class="container">
+						<h2>Options</h1>
+						
+						<div class="row">
+				    		<div class="col-xs-12"><p>Enter RNA-Sequence here:</p></div>
+				  		</div>
+				  		<div class="row">
+				    		<div class="col-xs-12"><input class="textbox" id="SEQ_BOX"><br><br></div>
+				  		</div>
+				  		<div class="row">
+				    		<div class="col-xs-12"><p>Enter Dot-Bracket Annotation here:</p></div>
+				  		</div>
+				  		<div class="row">
+				    		<div class="col-xs-12"><input class="textbox" id="DOTBR_BOX"><br><br></div>
+						</div>
+				  		
+				  		<div class="bigrow">
+				  				A  <input type="text" id="acolor">
+				  				C  <input type="text" id="ccolor">
+				  				G  <input type="text" id="gcolor">
+				  				U  <input type="text" id="ucolor">
+				  		</div>
+				  		<div class="bigrow">
+				    		<input class="button" id="PERFORM_VIS" name="Perform Vis" value="Show secondary structure">
+				  		</div>
+					</div>
+				<div class="drawfield">
+					<div id="cy"></div>
+				</div>
+			</div>
+		</div>
 	</div>
-
-	<div id="cy"></div>
-
 </body>
