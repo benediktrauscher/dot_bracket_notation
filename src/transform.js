@@ -414,12 +414,40 @@ function normalizeAngle(angle,fromVal) {
 	}
 	return result;		
 }
-/*
+
+function graphToStrings(graph){
+	console.log(graph.links[100]);
+	var seq = "";
+	var dotbr = [];
+	var partner;
+
+	for(var i = 0; i < graph.nodes.length; i++){
+		seq += graph.nodes[i].name;
+		partner = getPartner(i, graph.links);
+		if(partner === -1){
+			dotbr[i] = ".";
+		}
+		else if(partner > i){
+			console.log(i);
+			dotbr[i] = "(";
+			dotbr[partner] = ")";
+		} 
+		else {
+			continue;
+		}
+	}
+
+	return({seq: seq, dotbr: dotbr.join("")});
+}
+
+
 var seq = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
 var dotbr = "(((((((((...((((((.........))))))........((((((.......))))))..)))))))))";
+
 var struct = transformDotBracket(seq, dotbr);
-for(var i = 0; i < struct.coords.length; i++){
-//	debug(struct.coords[i].x + " " + struct.coords[i].y);
-//	debug(getPartner(i, struct.links))
-}
-*/
+debug(graphToStrings(struct).seq);
+debug(graphToStrings(struct).dotbr);
+
+struct.links.push({source: 18, target: 26, type: "hbond"});
+debug(graphToStrings(struct).dotbr);
+

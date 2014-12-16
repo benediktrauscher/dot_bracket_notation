@@ -1,68 +1,9 @@
-function d3test(graph){
-	d3.select("svg")
-       .remove();
-
-	var width = 960,
-    height = 500;
-
-	var color = d3.scale.category20();
-
-	var force = d3.layout.force()
-	    .charge(-300)
-	    .linkDistance(10)
-	    .size([width, height]);
-
-	var svg = d3.select("body").append("svg")
-	    .attr("width", width)
-	    .attr("height", height);
-
-	  force
-	      .nodes(graph.nodes)
-	      .links(graph.links)
-	      .start();
-
-	  var link = svg.selectAll(".link")
-	      .data(graph.links)
-	    .enter().append("line")
-	      .attr("class", "link")
-	      .style("stroke-width", function(d) { return Math.sqrt(4); });
-
-	  var node = svg.selectAll(".node")
-	      .data(graph.nodes)
-	    .enter().append("circle")
-	      .attr("class", "node")
-	      .attr("r", 12)
-	      .style("fill", function(d) { return  "blue"; })
-	      .call(force.drag);
-
-	  node.append("title")
-	      .text(function(d) { return d.name; });
-
-	  force.on("tick", function() {
-	    link.attr("x1", function(d) { return d.source.x; })
-	        .attr("y1", function(d) { return d.source.y; })
-	        .attr("x2", function(d) { return d.target.x; })
-	        .attr("y2", function(d) { return d.target.y; });
-
-	    node.attr("cx", function(d) { return d.x; })
-	        .attr("cy", function(d) { return d.y; });
-	  });
-
-}
-
+var drawEdge = false;
+var srcNode = {};
+var targetNode = {};
 
 function visCytoscapeJs(graph) {
 	var cyEle = toCytoscapeElements(graph);
-	var noHBond = [];
-	var hbonds = [];
-	for(var i = 0; i < cyEle.length; i++){
-		if(cyEle[i].data.label === "hbond"){
-			hbonds.push(cyEle[i]);
-		} 
-		else {
-			noHBond.push(cyEle[i]);
-		}
-	}
 
 	var cy = cytoscape({
   		container: document.getElementById('cy'),
@@ -109,15 +50,6 @@ function visCytoscapeJs(graph) {
       	}
 	})
 	
-	  
-	cy.on('tap', 'node', function(){
-	  try { // your browser may block popups
-	    window.open( this.data('href') );
-	  } catch(e){ // fall back on url change
-	    window.location.href = this.data('href'); 
-	  } 
-	});
-
 	cy.on('mouseover', 'node', function(event){
 		var nd = event.cyTarget;
 		Tip(parseInt(nd.id(), 10)+1);
@@ -125,5 +57,41 @@ function visCytoscapeJs(graph) {
 	cy.on('mouseout', 'node', function(event){
 		var nd = event.cyTarget;
 		UnTip();
+	})
+
+	$( document ).keydown(function(key) {
+		if(key.keyCode === 78){
+			console.log("edge drawing enabled");
+			drawEdge = true;
+		}
+	});
+	
+	cy.on('tap', 'node', function(event){
+		if(drawEdge && $.isEmptyObject(srcNode)){
+			srcNode = event.cyTarget;
+			console.log("new source node specified");
+		} 
+		else if (drawEdge && !($.isEmptyObject(srcNode))) {
+			targetNode = event.cyTarget;
+			console.log("new target node specified");
+			var inputStr = graphToStrings(graph);
+			console.log(inputStr.dotbr);
+			console.log(getPartner(srcNode.id(), graph.links));
+			graph.links.push({source: parseInt(srcNode.id(), 10), 
+				target: parseInt(targetNode.id(), 10), 
+				type: "hbond"});
+			console.log(srcNode.id() + " " + getPartner(srcNode.id(), graph.links));
+			drawEdge = false;
+			srcNode = {};
+			targetNode = {};
+
+			inputStr = graphToStrings(graph);
+			console.log(inputStr.dotbr);
+			document.getElementById('DOTBR_BOX').value = inputStr.dotbr;
+			visCytoscapeJs(transformDotBracket(inputStr.seq, inputStr.dotbr));
+
+		} else {
+			console.log("Edge drawing deactivated, press N to activate");
+		}
 	})
 }
