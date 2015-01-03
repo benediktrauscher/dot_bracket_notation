@@ -33,6 +33,8 @@ function visCytoscapeJs(graph) {
   		elements: cyEle,
   		
   		layout: {
+  			//Use preset layout with precalculated 
+  			//nucleotide coordinates
     		name: 'preset',
   		},			
       
@@ -46,10 +48,11 @@ function visCytoscapeJs(graph) {
 				.childNodes[4].style.position = "relative";
       		document.getElementById('cy').childNodes[0]
       			.style.position = "relative";
-      		document.getElementById('cy').style.position = "relative";
+      		document.getElementById('cy').style.position = "absolute";
       	}
 	})
 	
+	//Display nucleotide index on mouseover
 	cy.on('mouseover', 'node', function(event){
 		var nd = event.cyTarget;
 		Tip(parseInt(nd.id(), 10)+1);
@@ -59,6 +62,7 @@ function visCytoscapeJs(graph) {
 		UnTip();
 	})
 
+	// Add events for adding hbonds
 	$( document ).keydown(function(key) {
 		if(key.keyCode === 78){
 			console.log("edge drawing enabled");

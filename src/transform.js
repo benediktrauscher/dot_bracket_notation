@@ -9,6 +9,9 @@ function transformDotBracket(seq, dotbr){
 
 	var src;
 
+	//Indices corresponding to opening brackets are pushed onto a stack
+	//and are popped when a closing bracket is read.
+	//Links (hbonds, phosphodiester bonds) are created as needed.
 	for(var i = 0; i < seq.length; i++){
 		nodes.push({name: seq[i]});
 		if(i > 0){
@@ -59,13 +62,18 @@ function transformDotBracket(seq, dotbr){
 				break;
 		}
 	}
+	//Calculate coordinates for the nucleotides as suggested by RNAviz.
 	var coords = getCoords(seq, dotbr, links);
+	//Return graph in object format
 	return {nodes: nodes,
 			links: links,
 			coords: coords};
 }
 
 function toCytoscapeElements(graph){
+	//Create a JSON structure from a graph object built by the 
+	//transformDotBracket function
+	//The JSON structure fits the requirements of CytoscapeJS
 	var elements = [];
 	var el;
 
@@ -116,6 +124,8 @@ function toCytoscapeElements(graph){
 }
 
 function getColor(element){
+	//Get color for a certain nucleotide as specified by the color
+	//picker in the options column of the page.
 	var col = "";
 	if (element === "A"){
 		col = $("#acolor").spectrum('get').toHexString();
@@ -139,6 +149,7 @@ function getColor(element){
 }
 
 function getWeight(type) {
+	//Get weight for a certain bond type
 	var weight; 
 	if(type==="hbond"){
     	weight = 4;
@@ -149,6 +160,8 @@ function getWeight(type) {
 }
 
 function getCoords(seq, dotbr, links){
+	//This function calculates the coordinates for each nucleotide
+	//according to the RNAviz algorithm
 	var coords = [];
 	var centers = [];
 	var angles = [];
@@ -195,6 +208,8 @@ function getCoords(seq, dotbr, links){
 }
 
 function getPartner(srcIndex, links){
+	//Returns the partner of a nucleotide:
+	//-1 means there is no partner
 	var partner = -1;
 	for(var i = 0; i < links.length; i++){
 		if(links[i].type === "hbond"){
@@ -215,8 +230,7 @@ function getPartner(srcIndex, links){
 }
 
 function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
-	//debug(i);
-	//debug(j);
+	//Calculates loop coordinates
 	if (i > j) {
 		return;
 	}
@@ -234,7 +248,7 @@ function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
 					centers, angles, seq, links);
 	} 
 	else {
-		//debug("multi loop now");
+		//multi loop now
 		var k = i;
 		var basesMultiLoop = [];
 		var helices = [];
@@ -339,7 +353,6 @@ function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
 		var newAngle;
 		var m, n;
 		for (k = 0; k < helices.length; k++) {
-			//debug("herrrro");
 			m = helices[k];
 			n = getPartner(m, links);
 			newAngle = (angles[m] + angles[n]) / 2.0;
@@ -416,6 +429,8 @@ function normalizeAngle(angle,fromVal) {
 }
 
 function graphToStrings(graph){
+	//This function is used to update String/Dot-Bracket Notation
+	//after a hbond was inserted
 	console.log(graph.links[100]);
 	var seq = "";
 	var dotbr = [];
@@ -440,7 +455,8 @@ function graphToStrings(graph){
 	return({seq: seq, dotbr: dotbr.join("")});
 }
 
-
+/*
+//TEST CODE
 var seq = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
 var dotbr = "(((((((((...((((((.........))))))........((((((.......))))))..)))))))))";
 
@@ -449,5 +465,6 @@ debug(graphToStrings(struct).seq);
 debug(graphToStrings(struct).dotbr);
 
 struct.links.push({source: 18, target: 26, type: "hbond"});
-debug(graphToStrings(struct).dotbr);
 
+debug(graphToStrings(struct).dotbr);
+*/
