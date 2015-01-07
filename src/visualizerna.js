@@ -79,18 +79,14 @@ function visCytoscapeJs(graph) {
 			targetNode = event.cyTarget;
 			console.log("new target node specified");
 			var inputStr = graphToStrings(graph);
-			console.log(inputStr.dotbr);
-			console.log(getPartner(srcNode.id(), graph.links));
 			graph.links.push({source: parseInt(srcNode.id(), 10), 
 				target: parseInt(targetNode.id(), 10), 
 				type: "hbond"});
-			console.log(srcNode.id() + " " + getPartner(srcNode.id(), graph.links));
 			drawEdge = false;
 			srcNode = {};
 			targetNode = {};
 
 			inputStr = graphToStrings(graph);
-			console.log(inputStr.dotbr);
 			document.getElementById('DOTBR_BOX').value = inputStr.dotbr;
 			visCytoscapeJs(transformDotBracket(inputStr.seq, inputStr.dotbr));
 
