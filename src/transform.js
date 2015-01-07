@@ -431,7 +431,6 @@ function normalizeAngle(angle,fromVal) {
 function graphToStrings(graph){
 	//This function is used to update String/Dot-Bracket Notation
 	//after a hbond was inserted
-	console.log(graph.links[100]);
 	var seq = "";
 	var dotbr = [];
 	var partner;
@@ -443,7 +442,6 @@ function graphToStrings(graph){
 			dotbr[i] = ".";
 		}
 		else if(partner > i){
-			console.log(i);
 			dotbr[i] = "(";
 			dotbr[partner] = ")";
 		} 
