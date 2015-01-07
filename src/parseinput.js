@@ -9,8 +9,8 @@ function getInputSequences() {
 
 function main() {
   //initalize input boxes with example structure
-  document.getElementById('SEQ_BOX').value = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
-  document.getElementById('DOTBR_BOX').value = "(((((((((...((((((.........))))))........((((((.......))))))..)))))))))";
+  document.getElementById('SEQ_BOX').value = "CAGCACGACACUAGCAGUCAGUGUCAGACUGCAIACAGCACGACACUAGCAGUCAGUGUCAGACUGCAIACAGCACGACACUAGCAGUCAGUGUCAGACUGCAIA";
+  document.getElementById('DOTBR_BOX').value = "..(((((...(((((...(((((...(((((.....)))))...))))).....(((((...(((((.....)))))...))))).....)))))...)))))..";
   //init colors
   $("#acolor").spectrum({ color: "#64F73F" });
   $("#ccolor").spectrum({ color: "#FFB340" });
