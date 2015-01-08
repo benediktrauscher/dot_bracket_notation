@@ -31,4 +31,4 @@ function main() {
   }, false);
 }
 $( document ).ready(main);
-$( document ).ready(main);
+//$( document ).ready(main);
