@@ -49,6 +49,22 @@ function visCytoscapeJs(graph) {
       		document.getElementById('cy').childNodes[0]
       			.style.position = "relative";
       		document.getElementById('cy').style.position = "absolute";
+
+      		var centerButton = document.getElementById('CENTER');
+  			centerButton.readOnly = true;
+  			centerButton.addEventListener('click', function(){ 
+  				cy.center();
+  				cy.fit();
+  			}, false);
+
+  			var exportButton = document.getElementById('EXPORT');
+  			exportButton.readOnly = true;
+  			exportButton.addEventListener('click', function(){
+    			var png64 = cy.png();
+    			newTab = window.open();
+    			newTab.document.write('<img src="'+png64+'"/>');
+    			newTab.focus();
+  			}, false);
       	}
 	})
 	

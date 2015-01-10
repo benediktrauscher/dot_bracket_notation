@@ -8,6 +8,7 @@ function transformDotBracket(seq, dotbr){
 	var links = new Array();
 
 	var src;
+	var type;
 
 	//Indices corresponding to opening brackets are pushed onto a stack
 	//and are popped when a closing bracket is read.
@@ -32,31 +33,23 @@ function transformDotBracket(seq, dotbr){
 				break;
 			case ")":
 				src = round.pop();
-				links.push({source: src, target: i, type: "hbond"});
-				if(nodes[src].name==="G" || nodes[src].name==="C"){
-					links.push({source: i, target: src, type: "hbond"});
-				}
+				type = getType(isWatsonCrick(seq[src], seq[i]));
+				links.push({source: src, target: i, type: type});
 				break;
 			case "}":
 				src = curly.pop();
-				links.push({source: src, target: i, type: "hbond"});
-				if(nodes[src].name==="G" || nodes[src].name==="C"){
-					links.push({source: i, target: src, type: "hbond"});
-				}
+				type = getType(isWatsonCrick(seq[src], seq[i]));
+				links.push({source: src, target: i, type: type});
 				break;
 			case "]":
 				src = square.pop();
-				links.push({source: src, target: i, type: "hbond"});
-				if(nodes[src].name==="G" || nodes[src].name==="C"){
-					links.push({source: i, target: src, type: "hbond"});
-				}
+				type = getType(isWatsonCrick(seq[src], seq[i]));
+				links.push({source: src, target: i, type: type});
 				break;
 			case ">":
 				src = pointy.pop();
-				links.push({source: src, target: i, type: "hbond"});
-				if(nodes[src].name==="G" || nodes[src].name==="C"){
-					links.push({source: i, target: src, type: "hbond"});
-				}
+				type = getType(isWatsonCrick(seq[src], seq[i]));
+				links.push({source: src, target: i, type: type});
 				break;
 			case ".":
 				break;
@@ -126,24 +119,26 @@ function toCytoscapeElements(graph){
 function getColor(element){
 	//Get color for a certain nucleotide as specified by the color
 	//picker in the options column of the page.
-	var col = "";
-	if (element === "A"){
-		col = $("#acolor").spectrum('get').toHexString();
-	}
-	else if (element === "C"){
-		col = $("#ccolor").spectrum('get').toHexString();
-	}
-	else if (element === "U"){
-		col = $("#ucolor").spectrum('get').toHexString();
-	}
-	else if (element === "G"){
-		col = $("#gcolor").spectrum('get').toHexString();
-	}
-	else if (element === "hbond"){
-		col = "#3A9AD9";
-	}
-	else {
-		col = "black";
+	var col = "black";
+	switch(element){
+		case "A":
+			col = $("#acolor").spectrum('get').toHexString();
+			break;
+		case "C":
+			col = $("#ccolor").spectrum('get').toHexString();
+			break;
+		case "U":
+			col = $("#ucolor").spectrum('get').toHexString();
+			break;
+		case "G":
+			col = $("#gcolor").spectrum('get').toHexString();
+			break;	
+		case "hbond":
+			col = "#3A9AD9";
+			break;
+		case "violation":
+			col = "#FF4C4C";
+			break;
 	}
 	return col;
 }
@@ -151,7 +146,7 @@ function getColor(element){
 function getWeight(type) {
 	//Get weight for a certain bond type
 	var weight; 
-	if(type==="hbond"){
+	if(type=== "hbond" || type === "violation"){
     	weight = 4;
     } else {
     	weight = 5;
@@ -212,7 +207,7 @@ function getPartner(srcIndex, links){
 	//-1 means there is no partner
 	var partner = -1;
 	for(var i = 0; i < links.length; i++){
-		if(links[i].type === "hbond"){
+		if(links[i].type != "phosphodiester"){
 			if(links[i].source === srcIndex){
 				partner = links[i].target;
 				break;
@@ -453,6 +448,24 @@ function graphToStrings(graph){
 	return({seq: seq, dotbr: dotbr.join("")});
 }
 
+function isWatsonCrick(nucOne, nucTwo){
+	var watsonCrick = false;
+	if(nucOne == "G" && nucTwo == "C" ||
+		nucOne == "C" && nucTwo == "G" ||
+		nucOne == "A" && nucTwo == "U" || 
+		nucOne == "U" && nucTwo == "A") {
+		watsonCrick = true;
+	}
+	return watsonCrick;
+}
+
+function getType(watsonCrick){
+	if(watsonCrick){
+		return "hbond";
+	} else {
+		return "violation";
+	}
+}
 /*
 //TEST CODE
 var seq = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
