@@ -9,6 +9,11 @@
 	width: 30%;
 }
 
+.input {
+    height: 100px;
+    width: 70%;
+}
+
 .alertfield{
 	background-color: #F6F6F6;
 	font-family:'Helvetica Neue',sans-serif;
@@ -54,7 +59,7 @@
 	padding: 1px 10px;
 	border: 0;
 	height: 25px;
-	width: 80%;
+	width: 95%;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -63,6 +68,7 @@
     -webkit-box-shadow: 1px 1px 0 0 #FFF, 5px 5px 40px 2px #BBB inset;
     -webkit-background-clip: padding-box;
     outline: 0;
+    font-family: monospace;
 }
 
 .button {
