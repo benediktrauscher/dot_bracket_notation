@@ -18,6 +18,7 @@ function main() {
   $("#ccolor").spectrum({color: "#FFB340"});
   $("#gcolor").spectrum({color: "#EB413C"});
   $("#ucolor").spectrum({color: "#3C88EE"});
+  $("#selcolor").spectrum({color: "white"});
   //init alert box
   document.getElementById( "ALERT" ).value = "";
 
@@ -43,8 +44,6 @@ function main() {
       dotbrBox.value = [dotbrBox.value.slice(0, pos), ".", dotbrBox.value.slice(pos)].join("");
   }, false);
 }
-
-$( document ).ready(main);
 
 function checkConditions(sequences){
   "use strict";
@@ -82,3 +81,5 @@ function doGetCaretPosition (ctrl) {
     CaretPos = ctrl.selectionStart;
   return (CaretPos);
 }
+
+$( document ).ready(main);

@@ -1,11 +1,11 @@
 function transformDotBracket(seq, dotbr){
-	var round = new Array();
-	var curly = new Array();
-	var square = new Array();
-	var pointy = new Array();
+	var round = [];
+	var curly = [];
+	var square = [];
+	var pointy = [];
 
-	var nodes = new Array();
-	var links = new Array();
+	var nodes = [];
+	var links = [];
 
 	var src;
 	var type;
@@ -92,11 +92,11 @@ function toCytoscapeElements(graph){
 				//'width': 100,
 				//'height': 100
 			}
-		}
+		};
 		elements.push(el);
 	}
 	var links = graph.links;
-	for(var i = 0; i < links.length; i++){
+	for(i=0; i<links.length; i++){
 		el = {
 			group: 'edges',
 			data: {
@@ -110,7 +110,7 @@ function toCytoscapeElements(graph){
 				'line-color': getColor(links[i].type),
 				'width': getWeight(links[i].type)
 			}
-		}
+		};
 		elements.push(el);
 	}
 	return elements;
@@ -168,7 +168,7 @@ function getCoords(seq, dotbr, links){
 	}
 
 	dirAngle += 1.0 - Math.PI / 2.0;
-	var i = 0;
+	i = 0;
 	var x = 0.0;
 	var y = 0.0;
 	var vx = -Math.sin(dirAngle);
@@ -279,7 +279,7 @@ function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
 		}
 		var centerDist = Math.sqrt(Math.max(Math.pow(multiLoopRadius, 2) - Math.pow(65 / 2.0, 2), 0.0)) - 40;
 		var mlCenter = {x: x + (centerDist * Math.cos(dirAngle)),
-						y: y + (centerDist * Math.sin(dirAngle))}
+						y: y + (centerDist * Math.sin(dirAngle))};
 		// Base directing angle for (multi|hairpin) loop, from the center's
 		// perspective
 		var baseAngle = dirAngle

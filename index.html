@@ -8,6 +8,9 @@
 	<script src="https://rawgit.com/cytoscape/cytoscape.js/master/lib/springy.js"></script>
 	<script type="text/javascript" src="lib/spectrum/spectrum.js"></script>
 
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://axc.net/code_libraries/lasso/lasso.min.js"></script>
+
 	<script src="src/transform.js"></script>
 	<script src="src/visualizerna.js"></script>
 	<script src="src/parseinput.js"></script>
@@ -41,6 +44,12 @@
 				    	<input class="button" id="PERFORM_VIS" name="Perform Vis" value="Show structure">
 				    	<input class="button" id="CENTER" name="CenterView" value="Center view">
 				    	<input class="button" id="EXPORT" name="ExportStructure" value="Export as PNG">
+
+				    	<div>
+				    		<br>
+				    		Color of selected nucleic acids <input type="text" id="selcolor"><br><br>
+				    		<input class="button" id="SELCOL" name="Change" value="Change">
+				    	</div>
 				  	</div>
 
 				<div class="drawfield">
