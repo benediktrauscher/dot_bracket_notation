@@ -168,7 +168,9 @@ $.fn.extend({
       this.mousemove(function (e) {
         // mouse move captures co-ordinates + triggers "Point" event
         if ($(this).is(".lassoRunning")) {
-          var point = [e.offsetX, e.offsetY];
+          var px = (e.offsetX || e.clientX - $(e.target).offset().left + window.pageXOffset);
+          var py = (e.offsetY || e.clientY - $(e.target).offset().top + window.pageYOffset);
+          var point = [px, py];
           $(this).data("lassoPoints").push(point);
           $(this).trigger("lassoPoint", [point]);
         }
