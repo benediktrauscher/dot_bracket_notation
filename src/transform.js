@@ -182,9 +182,9 @@ function getCoords(seq, dotbr, links){
 		var j = getPartner(i, links);
 		
 		if(j > i){
-			drawLoop(i, j, 	x + (65 * vx / 2.0), y
-								+ (65 * vy / 2.0), dirAngle,
-								coords, centers, angles, seq, links);
+			drawLoop(i, j, 	x + (65 * vx / 2.0), 
+				y + (65 * vy / 2.0), dirAngle,
+				coords, centers, angles, seq, links);
 			centers[i].x = coords[i].x + 65 * vy;
 			centers[i].y = y - 65 * vx;
 			i = j;
@@ -299,13 +299,14 @@ function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
 			l = basesMultiLoop[k];
 			centers[l] = mlCenter;
 			var isPaired = (getPartner(i, links) != -1);
-			var isPaired3 = isPaired && (getPartner(i) < l);
+			var isPaired3 = isPaired && (getPartner(i, links) < l);
+			isPaired3 = false;
 			var isPaired5 = isPaired && !isPaired3;
 			if (isPaired3) {
-				baseAngle = correctHysteresis(baseAngle+angleIncrementBP/2.)-angleIncrementBP/2.;
+				baseAngle = correctHysteresis(baseAngle + angleIncrementBP/2.0) - angleIncrementBP/2.0;
 				currInterval.el1 = baseAngle;
 				intervals.push({el1: currUnpaired, el2: currInterval });
-				currInterval = { el1: -1., el2: -1. };  
+				currInterval = { el1: -1.0, el2: -1.0 };  
 				currUnpaired = [];
 			}
 			else if (isPaired5)
@@ -333,9 +334,9 @@ function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
 			var maxa = normalizeAngle(intervals[z].el2.el2, mina);
 			
 			for (var n = 0; n < intervals[z].el1.length; n++){
-				var ratio = (1. + n)/(1. + intervals[z].el1.length);
+				var ratio = (1.0 + n)/(1.0 + intervals[z].el1.length);
 				var b = intervals[z].el1[n];
-				angles[b] = mina + (1.-ratio)*(maxa-mina);
+				angles[b] = mina + (1.0-ratio)*(maxa-mina);
 			}
 		}
 				
@@ -346,14 +347,13 @@ function drawLoop(i, j, x, y, dirAngle, coords, centers, angles, seq, links){
 		}	
 			
 		var newAngle;
-		var m, n;
-		for (k = 0; k < helices.length; k++) {
+		var m, r;
+		for(k = 0; k < helices.length; k++){
 			m = helices[k];
-			n = getPartner(m, links);
-			newAngle = (angles[m] + angles[n]) / 2.0;
-			drawLoop(m + 1, n - 1, (40 * Math.cos(newAngle)) + (coords[m].x + coords[n].x) / 2.0,
-						(40 * Math.sin(newAngle))
-								+ (coords[m].y + coords[n].y) / 2.0, newAngle,
+			r = getPartner(m, links);
+			newAngle = (angles[m] + angles[r]) / 2.0;
+			drawLoop(m + 1, r - 1, (40 * Math.cos(newAngle)) + (coords[m].x + coords[r].x) / 2.0,
+						(40 * Math.sin(newAngle)) + (coords[m].y + coords[r].y) / 2.0, newAngle,
 						coords, centers, angles, seq, links);
 			}
 		}
@@ -395,11 +395,11 @@ function objFun(n1, n2, r, bpdist, multidist) {
 }
 
 function correctHysteresis(angle){
-	var hystAttr = [ 0., Math.PI/4., Math.PI/2., 3.*Math.PI/4., Math.PI, 5.*(Math.PI)/4., 3.*(Math.PI)/2, 7.*(Math.PI)/4.];
+	var hystAttr = [ 0.0, Math.PI/4.0, Math.PI/2.0, 3.0*Math.PI/4.0, Math.PI, 5.0*(Math.PI)/4.0, 3.0*(Math.PI)/2, 7.0*(Math.PI)/4.0];
 	var result = normalizeAngle(angle);
 	for (var i = 0; i < hystAttr.length; i++){
 		var att = hystAttr[i];
-		if (Math.abs(normalizeAngle(att-result,-Math.PI)) < .15){
+		if (Math.abs(normalizeAngle(att-result,-Math.PI)) < 0.15){
 			result = att;
 		}
 	}
@@ -407,18 +407,18 @@ function correctHysteresis(angle){
 }
 
 function normalizeAngle(angle){
-	return normalizeAngle(angle,0.);
+	return normalizeAngle(angle,0.0);
 }
 	
 function normalizeAngle(angle,fromVal) {
-	var toVal = fromVal +2.*Math.PI;
+	var toVal = fromVal +2.0*Math.PI;
 	var result = angle;
 	while(result<fromVal){
-		result += 2.*Math.PI;
+		result += 2.0*Math.PI;
 	}
 	while(result >= toVal)
 	{
-		result -= 2.*Math.PI;
+		result -= 2.0*Math.PI;
 	}
 	return result;		
 }
