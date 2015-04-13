@@ -18,7 +18,7 @@ function main() {
   $("#ccolor").spectrum({color: "#FFB340"});
   $("#gcolor").spectrum({color: "#EB413C"});
   $("#ucolor").spectrum({color: "#3C88EE"});
-  $("#selcolor").spectrum({color: "white"});
+  $("#selcolor").spectrum({color: "#F6F6F6"});
   //init alert box
   document.getElementById( "ALERT" ).value = "";
 

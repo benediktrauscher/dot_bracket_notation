@@ -471,6 +471,11 @@ function getType(watsonCrick){
 var seq = "CGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUG";
 var dotbr = "(((((((((...((((((.........))))))........((((((.......))))))..)))))))))";
 
+s. cereveisiae t-rana phe
+GCGGAUUUAGCUCAGUUGGGAGAGCGCCAGACUGAAGAUUUGGAGGUCCUGUGUUCGAUCCACAGAAUUCGCA
+(((((((..((((........)))).((((.........)))).....(((((.......)))))))))))).
+
+
 var struct = transformDotBracket(seq, dotbr);
 debug(graphToStrings(struct).seq);
 debug(graphToStrings(struct).dotbr);

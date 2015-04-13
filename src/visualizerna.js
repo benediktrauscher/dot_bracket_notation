@@ -58,8 +58,9 @@ function visCytoscapeJs(graph) {
   			exportButton.readOnly = true;
   			exportButton.addEventListener("click", function(){
     			var png64 = cy.png();
+          console.log(png64);
     			var newTab = window.open();
-    			newTab.document.write( "<img src=" + png64 + "/>" );
+    			newTab.document.write( "<img src=" + png64 + " />" );
     			newTab.focus();
   			}, false);
         },
@@ -144,6 +145,7 @@ function visCytoscapeJs(graph) {
     changeCol.readOnly = true;
     changeCol.addEventListener("click", function(){ 
         cy.$(':selected').css("background-color", $("#selcolor").spectrum('get').toHexString());
+        cy.$(':selected').unselect();
     }, false);
 }
 
